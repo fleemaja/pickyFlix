@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  FiltersViewController.swift
 //  pickyFlix
 //
 //  Created by Drew Fleeman on 7/18/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class FiltersViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

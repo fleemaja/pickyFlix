@@ -9,9 +9,23 @@
 import UIKit
 
 class SearchResultsTableViewController: UITableViewController {
+    
+    var movies = [Movie]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
+    var searchResults: String? {
+        didSet {
+            print("prepare for segue working as intended")
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getTMDBMovies()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -34,13 +48,15 @@ class SearchResultsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 10
+        return self.movies.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath)
 
         // Configure the cell...
+        let movie = movies[indexPath.row]
+        cell.textLabel?.text = movie.title
 
         return cell
     }
@@ -89,5 +105,41 @@ class SearchResultsTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func getTMDBMovies() {
+        TheMovieDatabaseApiClient.shared.getMovies() { data, response, error in
+            if error != nil {
+                return
+            }
+            
+            let results: [[String: AnyObject]]
+            do {
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:Any]
+                results = (json?["results"] as? [[String : AnyObject]])!
+            } catch {
+                print("JSON converting error")
+                return
+            }
+            
+            for result in results {
+                let movie = Movie(dictionary: result)
+                self.movies.append(movie)
+            }
+            
+//            for result in results {
+//                DispatchQueue.global().async {
+//                    let data = try? Data(contentsOf: url!)
+//                    
+//                    if data != nil {
+//                        let image = UIImage(data: data!)
+//                        var pinInfo = [String:Any]()
+//                        pinInfo["latitude"] = self.latitudeVal
+//                        pinInfo["longitude"] = self.longitudeVal
+//                        self.addPhotoToDatabase(image: image!, pinInfo: pinInfo)
+//                    }
+//                }
+//            }
+        }
+    }
 
 }

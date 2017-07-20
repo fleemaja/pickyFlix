@@ -19,6 +19,19 @@ class FiltersViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // make api request and render table of results in detail view
+        // segue identifier: filterMovies
+        let tabBarController = segue.destination as! UITabBarController
+        if let navigationController = tabBarController.viewControllers?[0] as? UINavigationController,
+           let searchResultsViewController = navigationController.visibleViewController as? SearchResultsTableViewController,
+           let identifier = segue.identifier {
+            if identifier == "filterMovies" {
+                 searchResultsViewController.searchResults = "Placeholder"
+            }
+        }
+    }
 
 
 }

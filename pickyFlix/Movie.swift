@@ -12,9 +12,11 @@ struct Movie {
     
     let id: Int32
     let title: String
+    var savedMovie: Bool
     
-    init(dictionary: [String : AnyObject]) {
+    init(dictionary: [String : AnyObject], inWatchlist: Bool) {
         id = (dictionary["id"] as? Int32)!
         title = dictionary["title"] as? String ?? ""
+        savedMovie = inWatchlist
     }
 }

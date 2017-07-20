@@ -17,6 +17,12 @@ class SearchResultsTableViewController: UITableViewController {
         }
     }
     
+    var watchlist = [MovieObject]() {
+        didSet {
+            getTMDBMovies()
+        }
+    }
+    
     var container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
     
     var searchResults: String? {
@@ -28,7 +34,7 @@ class SearchResultsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getTMDBMovies()
+        loadWatchlist()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -36,10 +42,16 @@ class SearchResultsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    private func loadWatchlist() {
+        if let context = container?.viewContext {
+            context.perform {
+                let movieRequest: NSFetchRequest<MovieObject> = MovieObject.fetchRequest()
+                if let movieObjects = (try? context.fetch(movieRequest)) {
+                    self.watchlist = movieObjects
+                }
+            }
+        }
     }
 
     // MARK: - Table view data source
@@ -56,17 +68,20 @@ class SearchResultsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath)
-
+        
         // Configure the cell...
         let movie = movies[indexPath.row]
         cell.textLabel?.text = movie.title
-
+        cell.detailTextLabel?.text = "Watchlist? \(movie.savedMovie ? "YEP" : "NOPE")"
+        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let movie = movies[indexPath.row]
-        print(movie)
+        var movie = movies[indexPath.row]
+        movies.remove(at: indexPath.row)
+        movie.savedMovie = true
+        movies.insert(movie, at: indexPath.row)
         var movieInfo = [String:Any]()
         movieInfo["id"] = movie.id
         movieInfo["title"] = movie.title
@@ -142,7 +157,13 @@ class SearchResultsTableViewController: UITableViewController {
             }
             
             for result in results {
-                let movie = Movie(dictionary: result)
+                var inWatchlist = false
+                for watchlistMovie in self.watchlist {
+                    if watchlistMovie.id == (result["id"] as! Int32) {
+                        inWatchlist = true
+                    }
+                }
+                let movie = Movie(dictionary: result, inWatchlist: inWatchlist)
                 self.movies.append(movie)
             }
         }

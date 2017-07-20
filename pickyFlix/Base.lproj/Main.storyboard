@@ -70,20 +70,20 @@
         <scene sceneID="65L-pg-kze">
             <objects>
                 <tableViewController id="6w8-ot-Tcd" customClass="SearchResultsTableViewController" customModule="pickyFlix" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="98" sectionHeaderHeight="28" sectionFooterHeight="28" id="eRb-wg-4cL">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="eRb-wg-4cL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="movieCell" textLabel="4EL-9X-z1P" rowHeight="98" style="IBUITableViewCellStyleDefault" id="cGS-bZ-x7s" customClass="MovieTableViewCell" customModule="pickyFlix" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="98"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="movieCell" textLabel="4EL-9X-z1P" rowHeight="100" style="IBUITableViewCellStyleDefault" id="cGS-bZ-x7s" customClass="MovieTableViewCell" customModule="pickyFlix" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cGS-bZ-x7s" id="O8m-Y2-sF8">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="97.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4EL-9X-z1P">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="97.5"/>
+                                            <rect key="frame" x="15" y="0.0" width="345" height="99.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -141,37 +141,6 @@
             </objects>
             <point key="canvasLocation" x="100" y="-220.83958020989508"/>
         </scene>
-        <!--Watchlist-->
-        <scene sceneID="dHt-OF-Cae">
-            <objects>
-                <viewController id="NCc-Ig-Elo" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="5ca-Py-dS0"/>
-                        <viewControllerLayoutGuide type="bottom" id="M1a-o7-MVd"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="z9k-lR-p0v">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Watchlist Goes Here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fql-Th-X57">
-                                <rect key="frame" x="89" y="323" width="197" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="fql-Th-X57" firstAttribute="centerX" secondItem="z9k-lR-p0v" secondAttribute="centerX" id="OFY-Mi-AlB"/>
-                            <constraint firstItem="fql-Th-X57" firstAttribute="centerY" secondItem="z9k-lR-p0v" secondAttribute="centerY" id="XIg-2x-Xbi"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Watchlist" id="O14-38-AeV"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jeY-A3-02f" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1976.8" y="-104.7976011994003"/>
-        </scene>
         <!--Search Results-->
         <scene sceneID="j8H-pY-TEI">
             <objects>
@@ -203,12 +172,50 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="NCc-Ig-Elo" kind="relationship" relationship="rootViewController" id="ENm-4z-5nK"/>
+                        <segue destination="unD-4c-ONF" kind="relationship" relationship="rootViewController" id="hDR-H3-xEe"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tyz-Ko-wmw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1037.5999999999999" y="-104.7976011994003"/>
+        </scene>
+        <!--Watchlist-->
+        <scene sceneID="eMX-Le-G68">
+            <objects>
+                <tableViewController id="unD-4c-ONF" customClass="WatchlistTableViewController" customModule="pickyFlix" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="jw8-x8-8Pb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="movieCell" textLabel="NFi-KT-50k" rowHeight="100" style="IBUITableViewCellStyleDefault" id="FDD-uO-INa" customClass="MovieTableViewCell" customModule="pickyFlix" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FDD-uO-INa" id="LWc-q5-95D">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NFi-KT-50k">
+                                            <rect key="frame" x="15" y="0.0" width="345" height="99.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="unD-4c-ONF" id="yaP-3v-I5C"/>
+                            <outlet property="delegate" destination="unD-4c-ONF" id="7Th-Oi-atc"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Watchlist" id="KKX-NJ-WRz"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RvC-oA-7u5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1976.8" y="-105.69715142428787"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

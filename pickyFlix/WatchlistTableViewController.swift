@@ -1,34 +1,27 @@
 //
-//  SearchResultsTableViewController.swift
+//  WatchlistTableViewController.swift
 //  pickyFlix
 //
-//  Created by Drew Fleeman on 7/18/17.
+//  Created by Drew Fleeman on 7/20/17.
 //  Copyright © 2017 drew. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-class SearchResultsTableViewController: UITableViewController {
+class WatchlistTableViewController: UITableViewController {
     
-    var movies = [Movie]() {
+    var movies = [MovieObject]() {
         didSet {
             tableView.reloadData()
         }
     }
     
     var container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
-    
-    var searchResults: String? {
-        didSet {
-            print("prepare for segue working as intended")
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        getTMDBMovies()
+        loadMovies()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -36,10 +29,20 @@ class SearchResultsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    private func loadMovies() {
+        print("loading movies")
+        if let context = container?.viewContext {
+            context.perform {
+                let movieRequest: NSFetchRequest<MovieObject> = MovieObject.fetchRequest()
+                if let movieObjects = (try? context.fetch(movieRequest)) {
+                    print("MovieObject count: \(movieObjects.count)")
+                    for movie in movieObjects {
+                        self.movies.append(movie)
+                    }
+                }
+            }
+        }
     }
 
     // MARK: - Table view data source
@@ -66,18 +69,18 @@ class SearchResultsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let movie = movies[indexPath.row]
-        print(movie)
-        var movieInfo = [String:Any]()
-        movieInfo["id"] = movie.id
-        movieInfo["title"] = movie.title
-        addMovieToWatchlist(with: movieInfo)
-    }
-    
-    private func addMovieToWatchlist(with movieInfo: [String:Any]) {
-        print("adding \(String(describing: movieInfo["title"])) to watchlist")
-        container?.performBackgroundTask { context in
-            _ = try? MovieObject.findOrCreateMovie(matching: movieInfo, in: context)
-            try? context.save()
+        if let context = container?.viewContext {
+            context.perform {
+                let movieRequest: NSFetchRequest<MovieObject> = MovieObject.fetchRequest()
+                movieRequest.predicate = NSPredicate(format: "%K == %@", argumentArray:["id", movie.id])
+                if let result = try? context.fetch(movieRequest) {
+                    for object in result {
+                        context.delete(object)
+                        self.movies.remove(at: indexPath.row)
+                    }
+                    try? context.save()
+                }
+            }
         }
     }
 
@@ -125,27 +128,5 @@ class SearchResultsTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    func getTMDBMovies() {
-        TheMovieDatabaseApiClient.shared.getMovies() { data, response, error in
-            if error != nil {
-                return
-            }
-            
-            let results: [[String: AnyObject]]
-            do {
-                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:Any]
-                results = (json?["results"] as? [[String : AnyObject]])!
-            } catch {
-                print("JSON converting error")
-                return
-            }
-            
-            for result in results {
-                let movie = Movie(dictionary: result)
-                self.movies.append(movie)
-            }
-        }
-    }
 
 }

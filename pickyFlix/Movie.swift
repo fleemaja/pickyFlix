@@ -10,9 +10,11 @@ import Foundation
 
 struct Movie {
     
+    let id: Int32
     let title: String
     
     init(dictionary: [String : AnyObject]) {
+        id = (dictionary["id"] as? Int32)!
         title = dictionary["title"] as? String ?? ""
     }
 }

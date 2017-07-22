@@ -74,6 +74,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <activityIndicatorView key="tableFooterView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="aML-64-X53">
+                            <rect key="frame" x="0.0" y="128" width="375" height="37"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="color" red="0.92052400109999999" green="0.46911138299999999" blue="0.42254874110000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </activityIndicatorView>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="movieCell" textLabel="4EL-9X-z1P" detailTextLabel="M9L-iE-jau" rowHeight="100" style="IBUITableViewCellStyleSubtitle" id="cGS-bZ-x7s" customClass="MovieTableViewCell" customModule="pickyFlix" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
@@ -106,6 +111,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Search Results" id="fNZ-Uu-SbO"/>
+                    <connections>
+                        <outlet property="spinner" destination="aML-64-X53" id="u4R-Ub-fpW"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z8o-4T-PQC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -10,8 +10,8 @@ import Foundation
 
 class TheMovieDatabaseApiClient {
     
-    public func getMovies(handler: @escaping (_ data: Data?, _ response: AnyObject?, _ error: String?) -> Void) {
-        let url = constructURLString()
+    public func getMovies(page: Int, handler: @escaping (_ data: Data?, _ response: AnyObject?, _ error: String?) -> Void) {
+        let url = constructURLString(page: page)
         let request = NSMutableURLRequest(url: URL(string: url)!)
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
@@ -20,7 +20,7 @@ class TheMovieDatabaseApiClient {
         task.resume()
     }
     
-    func constructURLString() -> String {
+    func constructURLString(page: Int) -> String {
         let apiUrl = "https://api.themoviedb.org/3/discover/movie"
         
         let params = [
@@ -29,7 +29,7 @@ class TheMovieDatabaseApiClient {
             "sort_by": "popularity.desc",
             "include_video": false,
             "include_adult": false,
-            "page": 1
+            "page": page
             ] as [String : Any]
         
         let request = prepareRequest(baseUrl: "\(apiUrl)", params: params)

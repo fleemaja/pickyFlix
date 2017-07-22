@@ -11,6 +11,10 @@ import CoreData
 
 class SearchResultsTableViewController: UITableViewController {
     
+    var page = 1
+    
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
     var movies = [Movie]() {
         didSet {
             tableView.reloadData()
@@ -19,7 +23,7 @@ class SearchResultsTableViewController: UITableViewController {
     
     var watchlist = [MovieObject]() {
         didSet {
-            getTMDBMovies()
+            getTMDBMovies(page: page)
         }
     }
     
@@ -73,6 +77,12 @@ class SearchResultsTableViewController: UITableViewController {
         let movie = movies[indexPath.row]
         cell.textLabel?.text = movie.title
         cell.detailTextLabel?.text = "Watchlist? \(movie.savedMovie ? "YEP" : "NOPE")"
+        
+        // if last table cell is rendered fetch next page of api request results
+        if (indexPath.row == movies.count - 1) {
+            page += 1
+            getTMDBMovies(page: page)
+        }
         
         return cell
     }
@@ -141,8 +151,9 @@ class SearchResultsTableViewController: UITableViewController {
     }
     */
     
-    func getTMDBMovies() {
-        TheMovieDatabaseApiClient.shared.getMovies() { data, response, error in
+    func getTMDBMovies(page: Int) {
+        spinner.startAnimating()
+        TheMovieDatabaseApiClient.shared.getMovies(page: page) { data, response, error in
             if error != nil {
                 return
             }
@@ -165,6 +176,9 @@ class SearchResultsTableViewController: UITableViewController {
                 }
                 let movie = Movie(dictionary: result, inWatchlist: inWatchlist)
                 self.movies.append(movie)
+            }
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
             }
         }
     }

@@ -160,7 +160,7 @@
         <scene sceneID="j8H-pY-TEI">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bN6-2U-i3P" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search Results" id="QSP-Ca-OJk"/>
+                    <tabBarItem key="tabBarItem" title="Search Results" image="list" id="QSP-Ca-OJk"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="G4M-rd-BpN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -179,7 +179,7 @@
         <scene sceneID="Aqr-pe-VBh">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uol-a1-Oav" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Watchlist" id="4I9-1J-o3E"/>
+                    <tabBarItem key="tabBarItem" title="Watchlist" image="watchlist" id="4I9-1J-o3E"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fGK-bt-nuL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -240,6 +240,10 @@
             <point key="canvasLocation" x="1976.8" y="-105.69715142428787"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="list" width="32" height="32"/>
+        <image name="watchlist" width="50" height="50"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="HOB-69-2Bl"/>
     </inferredMetricsTieBreakers>

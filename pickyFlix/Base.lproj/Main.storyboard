@@ -41,9 +41,8 @@
                                 <color key="textColor" red="0.92197414340101524" green="0.46923070051968024" blue="0.42391383912495889" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LOI-J7-QYO">
-                                <rect key="frame" x="125" y="306" width="125" height="54"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LOI-J7-QYO">
+                                <rect key="frame" x="132" y="615" width="111" height="32"/>
                                 <color key="backgroundColor" red="0.92197414339999995" green="0.46923070049999999" blue="0.42391383910000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                 <state key="normal" title="Search Movies">
@@ -53,14 +52,45 @@
                                     <segue destination="PAW-HC-yrZ" kind="showDetail" identifier="filterMovies" id="HOB-69-2Bl"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Ava-b7-UAy">
+                                <rect key="frame" x="27" y="110" width="320" height="474"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort By:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PM9-Vm-d21">
+                                        <rect key="frame" x="0.0" y="0.0" width="68" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="snv-yi-41n">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="216"/>
+                                    </pickerView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating (e.g. PG-13)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ws-hp-jPS">
+                                        <rect key="frame" x="0.0" y="237.5" width="145.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vn8-ly-Odf">
+                                        <rect key="frame" x="0.0" y="258" width="320" height="216"/>
+                                    </pickerView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="snv-yi-41n" firstAttribute="top" secondItem="VaQ-YH-P3j" secondAttribute="bottom" constant="28.5" id="10r-nq-atI"/>
+                            <constraint firstItem="LOI-J7-QYO" firstAttribute="centerX" secondItem="dfF-7a-rlb" secondAttribute="centerX" id="Inn-8m-Owd"/>
                             <constraint firstItem="VaQ-YH-P3j" firstAttribute="top" secondItem="9Q5-NE-IQ6" secondAttribute="bottom" constant="10" id="ZGA-Ft-DrS"/>
+                            <constraint firstItem="Ava-b7-UAy" firstAttribute="centerX" secondItem="dfF-7a-rlb" secondAttribute="centerX" id="cUq-4V-G6L"/>
                             <constraint firstAttribute="leadingMargin" secondItem="VaQ-YH-P3j" secondAttribute="leading" id="o5s-AB-faB"/>
+                            <constraint firstItem="Zod-qu-Qqd" firstAttribute="top" secondItem="LOI-J7-QYO" secondAttribute="bottom" constant="20" id="qBU-wt-US2"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Filters" id="ear-Bu-JeO"/>
+                    <connections>
+                        <outlet property="ratingPicker" destination="vn8-ly-Odf" id="cwA-o1-D8T"/>
+                        <outlet property="sortPicker" destination="snv-yi-41n" id="NN7-3z-5OK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tsu-h5-abA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

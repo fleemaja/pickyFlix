@@ -23,17 +23,14 @@ class SearchResultsTableViewController: UITableViewController {
     
     var watchlist = [MovieObject]() {
         didSet {
-            getTMDBMovies(page: page)
+            getTMDBMovies(page: page, sortType: sortType!, rating: rating!)
         }
     }
     
     var container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
     
-    var searchResults: String? {
-        didSet {
-            print("prepare for segue working as intended")
-        }
-    }
+    var sortType: String?
+    var rating: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +79,7 @@ class SearchResultsTableViewController: UITableViewController {
         // if last table cell is rendered fetch next page of api request results
         if (indexPath.row == movies.count - 1) {
             page += 1
-            getTMDBMovies(page: page)
+            getTMDBMovies(page: page, sortType: sortType!, rating: rating!)
         }
         
         return cell
@@ -152,9 +149,9 @@ class SearchResultsTableViewController: UITableViewController {
     }
     */
     
-    func getTMDBMovies(page: Int) {
+    func getTMDBMovies(page: Int, sortType: String, rating: String) {
         spinner.startAnimating()
-        TheMovieDatabaseApiClient.shared.getMovies(page: page) { data, response, error in
+        TheMovieDatabaseApiClient.shared.getMovies(page: page, sortType: sortType, rating: rating) { data, response, error in
             if error != nil {
                 return
             }

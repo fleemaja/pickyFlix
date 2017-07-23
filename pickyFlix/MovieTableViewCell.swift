@@ -16,12 +16,21 @@ class MovieTableViewCell: UITableViewCell {
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    var movie: Movie? { didSet { updateUI() } }
+    var movie: Movie? {
+        didSet {
+            updateUI()
+        }
+    }
     
     private func updateUI() {
         titleLabel?.text = movie?.title
-        let year = movie?.year
-        yearLabel?.text = year?.substring(to: (year?.index((year?.startIndex)!, offsetBy: 4))!)
+        let movieYear = movie?.year
+        if (movieYear?.characters.count)! >= 4 {
+            yearLabel?.text = movieYear?.substring(to: (movieYear?.index((movieYear?.startIndex)!, offsetBy: 4))!)
+        } else {
+            yearLabel?.text = ""
+        }
+        
         descriptionLabel?.text = movie?.description
         ratingLabel?.text = "\(movie?.rating ?? "") ✭"
         

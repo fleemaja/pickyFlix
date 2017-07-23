@@ -10,4 +10,27 @@ import UIKit
 
 class MovieTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var moviePoster: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var yearLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    
+    var movie: Movie? { didSet { updateUI() } }
+    
+    private func updateUI() {
+        titleLabel?.text = movie?.title
+        let year = movie?.year
+        yearLabel?.text = year?.substring(to: (year?.index((year?.startIndex)!, offsetBy: 4))!)
+        descriptionLabel?.text = movie?.description
+        ratingLabel?.text = "\(movie?.rating ?? "") ✭"
+        
+        if let image = movie?.posterImage {
+            moviePoster?.image = image
+        } else {
+            moviePoster?.image = nil
+        }
+    }
+    
+    
 }

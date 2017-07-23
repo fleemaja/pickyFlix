@@ -75,8 +75,9 @@ class SearchResultsTableViewController: UITableViewController {
         
         // Configure the cell...
         let movie = movies[indexPath.row]
-        cell.textLabel?.text = movie.title
-        cell.detailTextLabel?.text = "Watchlist? \(movie.savedMovie ? "YEP" : "NOPE")"
+        if let movieCell = cell as? MovieTableViewCell {
+            movieCell.movie = movie
+        }
         
         // if last table cell is rendered fetch next page of api request results
         if (indexPath.row == movies.count - 1) {

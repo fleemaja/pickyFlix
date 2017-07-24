@@ -12,15 +12,21 @@ class FiltersViewController: UIViewController {
     
     @IBOutlet weak var sortField: UITextField!
     @IBOutlet weak var ratingField: UITextField!
+    @IBOutlet weak var startDateRange: UITextField!
+    @IBOutlet weak var endDateRange: UITextField!
     
     let sortPicker = UIPickerView()
     let ratingPicker = UIPickerView()
+    let startDatePicker = UIDatePicker()
+    let endDatePicker = UIDatePicker()
     
     var sortPickerData: [String] = [String]()
     var ratingPickerData: [String] = [String]()
     
     var sortType = "popularity.desc"
     var rating = "All"
+    var startDate: Date?
+    var endDate: Date?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +58,36 @@ class FiltersViewController: UIViewController {
             "G", "PG", "PG-13", "R", "NC-17"
         ]
         sortPickerData = ["popularity.desc", "revenue.desc", "release_date.desc", "vote_average.desc"]
+        
+        startDatePicker.datePickerMode = UIDatePickerMode.date
+        startDateRange.inputView = startDatePicker
+        startDatePicker.addTarget(self, action: #selector(datePickerValueChanged), for: UIControlEvents.valueChanged)
+        
+        endDatePicker.datePickerMode = UIDatePickerMode.date
+        endDateRange.inputView = endDatePicker
+        endDatePicker.addTarget(self, action: #selector(datePickerValueChanged), for: UIControlEvents.valueChanged)
+        
+        startDateRange.inputAccessoryView = toolBar
+        endDateRange.inputAccessoryView = toolBar
+
+    }
+    
+    func datePickerValueChanged(sender:UIDatePicker) {
+        
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateStyle = DateFormatter.Style.medium
+        
+        dateFormatter.timeStyle = DateFormatter.Style.none
+        
+        if sender == startDatePicker {
+            startDateRange.text = dateFormatter.string(from: sender.date)
+            startDate = sender.date
+        } else {
+            endDateRange.text = dateFormatter.string(from: sender.date)
+            endDate = sender.date
+        }
+        
     }
     
     func donePicker(sender:UIBarButtonItem) {
@@ -73,6 +109,10 @@ class FiltersViewController: UIViewController {
             if identifier == "filterMovies" {
                 searchResultsViewController.sortType = sortType
                 searchResultsViewController.rating = rating
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                searchResultsViewController.startDate = dateFormatter.string(from: startDate!)
+                searchResultsViewController.endDate = dateFormatter.string(from: endDate!)
             }
         }
     }

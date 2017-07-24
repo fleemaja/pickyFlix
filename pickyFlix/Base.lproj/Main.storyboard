@@ -57,10 +57,10 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Ava-b7-UAy">
-                                <rect key="frame" x="87.5" y="123" width="200" height="161"/>
+                                <rect key="frame" x="80.5" y="123" width="215" height="301.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort By" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PM9-Vm-d21">
-                                        <rect key="frame" x="0.0" y="0.0" width="59" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort By (e.g. Most Popular)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PM9-Vm-d21">
+                                        <rect key="frame" x="0.0" y="0.0" width="215" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -86,9 +86,29 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Release Date Range" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OE1-Zv-hVG">
+                                        <rect key="frame" x="0.0" y="181" width="159" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="From" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QCh-fD-wHr">
+                                        <rect key="frame" x="0.0" y="221.5" width="200" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="To" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Ag-vL-T83">
+                                        <rect key="frame" x="0.0" y="271.5" width="200" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="2Ag-vL-T83" firstAttribute="width" secondItem="Qbg-oK-BSJ" secondAttribute="width" id="4g5-Ol-aUo"/>
                                     <constraint firstItem="giy-6D-dME" firstAttribute="width" secondItem="Qbg-oK-BSJ" secondAttribute="width" id="DBx-Ja-DT5"/>
+                                    <constraint firstItem="QCh-fD-wHr" firstAttribute="width" secondItem="giy-6D-dME" secondAttribute="width" id="i4l-HD-ROe"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -105,8 +125,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="Filters" id="ear-Bu-JeO"/>
                     <connections>
+                        <outlet property="endDateRange" destination="2Ag-vL-T83" id="1pz-6C-yPs"/>
                         <outlet property="ratingField" destination="giy-6D-dME" id="gzQ-1l-dBO"/>
                         <outlet property="sortField" destination="Qbg-oK-BSJ" id="GaA-Sh-XBr"/>
+                        <outlet property="startDateRange" destination="QCh-fD-wHr" id="kEJ-nX-KuH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tsu-h5-abA" userLabel="First Responder" sceneMemberID="firstResponder"/>

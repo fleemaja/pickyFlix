@@ -34,4 +34,21 @@ class MovieObject: NSManagedObject {
         return movie
     }
     
+    class func removeMovie(matching movieInfo: [String:Any], in context: NSManagedObjectContext) throws {
+        let request: NSFetchRequest<MovieObject> = MovieObject.fetchRequest()
+        request.predicate = NSPredicate(format: "%K == %@", argumentArray:["id", movieInfo["id"] as! Int32])
+        
+        do {
+            let matches = try context.fetch(request)
+            if matches.count > 0 {
+                for object in matches {
+                    context.delete(object)
+                }
+                try? context.save()
+            }
+        } catch {
+            throw error
+        }
+    }
+    
 }

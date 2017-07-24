@@ -88,22 +88,9 @@ class SearchResultsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var movie = movies[indexPath.row]
-        movies.remove(at: indexPath.row)
-        movie.savedMovie = true
-        movies.insert(movie, at: indexPath.row)
-        var movieInfo = [String:Any]()
-        movieInfo["id"] = movie.id
-        movieInfo["title"] = movie.title
-        addMovieToWatchlist(with: movieInfo)
-    }
-    
-    private func addMovieToWatchlist(with movieInfo: [String:Any]) {
-        print("adding \(String(describing: movieInfo["title"])) to watchlist")
-        container?.performBackgroundTask { context in
-            _ = try? MovieObject.findOrCreateMovie(matching: movieInfo, in: context)
-            try? context.save()
-        }
+        let movie = movies[indexPath.row]
+        let url =  URL(string: "https://www.themoviedb.org/movie/\(movie.id)")!
+        UIApplication.shared.open(url, options: [:])
     }
 
     /*

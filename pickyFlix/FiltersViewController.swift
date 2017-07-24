@@ -10,11 +10,14 @@ import UIKit
 
 class FiltersViewController: UIViewController {
     
-    var sortPickerData: [String] = [String]()
-    @IBOutlet weak var sortPicker: UIPickerView!
+    @IBOutlet weak var sortField: UITextField!
+    @IBOutlet weak var ratingField: UITextField!
     
+    let sortPicker = UIPickerView()
+    let ratingPicker = UIPickerView()
+    
+    var sortPickerData: [String] = [String]()
     var ratingPickerData: [String] = [String]()
-    @IBOutlet weak var ratingPicker: UIPickerView!
     
     var sortType = "popularity.desc"
     var rating = "All"
@@ -22,16 +25,37 @@ class FiltersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor(red: 235/255, green: 120/255, blue: 108/255, alpha: 1.0)
+        toolBar.sizeToFit()
         
-        self.sortPicker.delegate = self
-        self.sortPicker.dataSource = self
-        self.ratingPicker.delegate = self
-        self.ratingPicker.dataSource = self
+        let flexBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(donePicker))
+        toolBar.setItems([flexBarButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        
+        sortPicker.delegate = self
+        sortPicker.dataSource = self
+        sortField.inputView = sortPicker
+        
+        ratingPicker.delegate = self
+        ratingPicker.dataSource = self
+        ratingField.inputView = ratingPicker
+        
+        sortField.inputAccessoryView = toolBar
+        ratingField.inputAccessoryView = toolBar
         
         ratingPickerData = ["All",
             "G", "PG", "PG-13", "R", "NC-17"
         ]
         sortPickerData = ["popularity.desc", "revenue.desc", "release_date.desc", "vote_average.desc"]
+    }
+    
+    func donePicker(sender:UIBarButtonItem) {
+        self.view.endEditing(true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -93,8 +117,10 @@ extension FiltersViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         // The parameter named row and component represents what was selected.
         if pickerView == sortPicker {
             sortType = sortPickerData[row]
+            sortField.text = sortPickerData[row]
         } else if pickerView == ratingPicker {
             rating = ratingPickerData[row]
+            ratingField.text = ratingPickerData[row]
         }
     }
 }

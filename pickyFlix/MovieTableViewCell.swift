@@ -25,11 +25,7 @@ class MovieTableViewCell: UITableViewCell {
     private func updateUI() {
         titleLabel?.text = movie?.title
         let movieYear = movie?.year
-        if (movieYear?.characters.count)! >= 4 {
-            yearLabel?.text = movieYear?.substring(to: (movieYear?.index((movieYear?.startIndex)!, offsetBy: 4))!)
-        } else {
-            yearLabel?.text = ""
-        }
+        yearLabel?.text = "🗓 \(movieYear?.substring(to: (movieYear?.index((movieYear?.startIndex)!, offsetBy: 4))!) ?? "")"
         
         descriptionLabel?.text = movie?.description
         ratingLabel?.text = "\(movie?.rating ?? "") ✭"

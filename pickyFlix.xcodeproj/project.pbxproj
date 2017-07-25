@@ -13,6 +13,7 @@
 		3A03B2F91F213789005AA73A /* MovieObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A03B2F81F213789005AA73A /* MovieObject.swift */; };
 		3A03B2FB1F213A76005AA73A /* WatchlistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A03B2FA1F213A76005AA73A /* WatchlistTableViewController.swift */; };
 		3A4DB5B91F20FF4300309B04 /* PrimarySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DB5B81F20FF4300309B04 /* PrimarySplitViewController.swift */; };
+		3A4E8F3E1F27B2450057FF66 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4E8F3D1F27B2450057FF66 /* Genres.swift */; };
 		3A84FD191F1E99CC0043D3A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84FD181F1E99CC0043D3A4 /* AppDelegate.swift */; };
 		3A84FD1B1F1E99CC0043D3A4 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84FD1A1F1E99CC0043D3A4 /* FiltersViewController.swift */; };
 		3A84FD1E1F1E99CC0043D3A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A84FD1C1F1E99CC0043D3A4 /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 		3A03B2F81F213789005AA73A /* MovieObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieObject.swift; sourceTree = "<group>"; };
 		3A03B2FA1F213A76005AA73A /* WatchlistTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchlistTableViewController.swift; sourceTree = "<group>"; };
 		3A4DB5B81F20FF4300309B04 /* PrimarySplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimarySplitViewController.swift; sourceTree = "<group>"; };
+		3A4E8F3D1F27B2450057FF66 /* Genres.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
 		3A84FD151F1E99CC0043D3A4 /* pickyFlix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pickyFlix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A84FD181F1E99CC0043D3A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A84FD1A1F1E99CC0043D3A4 /* FiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 		3A84FD171F1E99CC0043D3A4 /* pickyFlix */ = {
 			isa = PBXGroup;
 			children = (
+				3A4E8F3D1F27B2450057FF66 /* Genres.swift */,
 				3A03B2F81F213789005AA73A /* MovieObject.swift */,
 				3A03B2F21F211657005AA73A /* Keys.swift */,
 				3A84FD2D1F1EA7FA0043D3A4 /* Supporting Files */,
@@ -174,6 +177,7 @@
 				3A03B2FB1F213A76005AA73A /* WatchlistTableViewController.swift in Sources */,
 				3A4DB5B91F20FF4300309B04 /* PrimarySplitViewController.swift in Sources */,
 				3A03B2F91F213789005AA73A /* MovieObject.swift in Sources */,
+				3A4E8F3E1F27B2450057FF66 /* Genres.swift in Sources */,
 				3A03B2F31F211657005AA73A /* Keys.swift in Sources */,
 				3A03B2F51F211B8E005AA73A /* Movie.swift in Sources */,
 				3A84FD311F1EAD9A0043D3A4 /* MovieTableViewCell.swift in Sources */,

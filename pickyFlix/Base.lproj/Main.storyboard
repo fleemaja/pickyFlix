@@ -36,7 +36,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PickyFlix" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VaQ-YH-P3j">
-                                <rect key="frame" x="16" y="74" width="102" height="29"/>
+                                <rect key="frame" x="26" y="74" width="102" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <color key="textColor" red="0.92197414340101524" green="0.46923070051968024" blue="0.42391383912495889" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -57,7 +57,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Ava-b7-UAy">
-                                <rect key="frame" x="80.5" y="123" width="215" height="301.5"/>
+                                <rect key="frame" x="26" y="123" width="324" height="392"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort By (e.g. Most Popular)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PM9-Vm-d21">
                                         <rect key="frame" x="0.0" y="0.0" width="215" height="20.5"/>
@@ -66,10 +66,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Sort Type" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qbg-oK-BSJ">
-                                        <rect key="frame" x="0.0" y="40.5" width="200" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="mqL-7v-DPz"/>
-                                        </constraints>
+                                        <rect key="frame" x="0.0" y="40.5" width="323" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -81,7 +78,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Rating Certification" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="giy-6D-dME">
-                                        <rect key="frame" x="0.0" y="131" width="200" height="30"/>
+                                        <rect key="frame" x="0.0" y="131" width="323" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -93,32 +90,46 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="From" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QCh-fD-wHr">
-                                        <rect key="frame" x="0.0" y="221.5" width="200" height="30"/>
+                                        <rect key="frame" x="0.0" y="221.5" width="323" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="To" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Ag-vL-T83">
-                                        <rect key="frame" x="0.0" y="271.5" width="200" height="30"/>
+                                        <rect key="frame" x="0.0" y="271.5" width="323" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tuU-La-6s7">
+                                        <rect key="frame" x="0.0" y="321.5" width="48.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Comedy, Drama, etc." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4rv-sB-c29">
+                                        <rect key="frame" x="0.0" y="362" width="323" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="2Ag-vL-T83" firstAttribute="width" secondItem="Qbg-oK-BSJ" secondAttribute="width" id="4g5-Ol-aUo"/>
-                                    <constraint firstItem="giy-6D-dME" firstAttribute="width" secondItem="Qbg-oK-BSJ" secondAttribute="width" id="DBx-Ja-DT5"/>
-                                    <constraint firstItem="QCh-fD-wHr" firstAttribute="width" secondItem="giy-6D-dME" secondAttribute="width" id="i4l-HD-ROe"/>
+                                    <constraint firstItem="giy-6D-dME" firstAttribute="width" secondItem="Qbg-oK-BSJ" secondAttribute="width" id="1IO-vu-5Ob"/>
+                                    <constraint firstItem="2Ag-vL-T83" firstAttribute="width" secondItem="Qbg-oK-BSJ" secondAttribute="width" id="7tC-bz-Ora"/>
+                                    <constraint firstItem="4rv-sB-c29" firstAttribute="width" secondItem="Qbg-oK-BSJ" secondAttribute="width" id="e3R-AJ-vlv"/>
+                                    <constraint firstItem="QCh-fD-wHr" firstAttribute="width" secondItem="Qbg-oK-BSJ" secondAttribute="width" id="nFB-fD-Cio"/>
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Qbg-oK-BSJ" firstAttribute="leading" secondItem="dfF-7a-rlb" secondAttribute="leadingMargin" constant="10" id="HAI-di-q5A"/>
                             <constraint firstItem="LOI-J7-QYO" firstAttribute="centerX" secondItem="dfF-7a-rlb" secondAttribute="centerX" id="Inn-8m-Owd"/>
                             <constraint firstItem="VaQ-YH-P3j" firstAttribute="top" secondItem="9Q5-NE-IQ6" secondAttribute="bottom" constant="10" id="ZGA-Ft-DrS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Qbg-oK-BSJ" secondAttribute="trailing" constant="10" id="bcS-uL-J4a"/>
                             <constraint firstItem="Ava-b7-UAy" firstAttribute="centerX" secondItem="dfF-7a-rlb" secondAttribute="centerX" id="cUq-4V-G6L"/>
-                            <constraint firstItem="LOI-J7-QYO" firstAttribute="width" secondItem="giy-6D-dME" secondAttribute="width" id="i6B-ia-Jo2"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="VaQ-YH-P3j" secondAttribute="leading" id="o5s-AB-faB"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="VaQ-YH-P3j" secondAttribute="leading" constant="-10" id="o5s-AB-faB"/>
                             <constraint firstItem="Zod-qu-Qqd" firstAttribute="top" secondItem="LOI-J7-QYO" secondAttribute="bottom" constant="20" id="qBU-wt-US2"/>
                             <constraint firstItem="Ava-b7-UAy" firstAttribute="top" secondItem="VaQ-YH-P3j" secondAttribute="bottom" constant="20" id="tCP-lz-g9k"/>
                         </constraints>
@@ -126,6 +137,7 @@
                     <navigationItem key="navigationItem" title="Filters" id="ear-Bu-JeO"/>
                     <connections>
                         <outlet property="endDateRange" destination="2Ag-vL-T83" id="1pz-6C-yPs"/>
+                        <outlet property="genreField" destination="4rv-sB-c29" id="9Ev-FZ-u3S"/>
                         <outlet property="ratingField" destination="giy-6D-dME" id="gzQ-1l-dBO"/>
                         <outlet property="sortField" destination="Qbg-oK-BSJ" id="GaA-Sh-XBr"/>
                         <outlet property="startDateRange" destination="QCh-fD-wHr" id="kEJ-nX-KuH"/>

@@ -14,19 +14,24 @@ class FiltersViewController: UIViewController {
     @IBOutlet weak var ratingField: UITextField!
     @IBOutlet weak var startDateRange: UITextField!
     @IBOutlet weak var endDateRange: UITextField!
+    @IBOutlet weak var genreField: UITextField!
     
     let sortPicker = UIPickerView()
     let ratingPicker = UIPickerView()
     let startDatePicker = UIDatePicker()
     let endDatePicker = UIDatePicker()
+    let genrePicker = UIPickerView()
     
     var sortPickerData: [String] = [String]()
     var ratingPickerData: [String] = [String]()
+    var genrePickerData: [String] = [String]()
     
     var sortType = "popularity.desc"
     var rating = "All"
     var startDate: Date?
     var endDate: Date?
+    let genres = Genres().genres
+    var genre = "0"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,13 +56,22 @@ class FiltersViewController: UIViewController {
         ratingPicker.dataSource = self
         ratingField.inputView = ratingPicker
         
+        genrePicker.delegate = self
+        genrePicker.dataSource = self
+        genreField.inputView = genrePicker
+        
         sortField.inputAccessoryView = toolBar
         ratingField.inputAccessoryView = toolBar
+        genreField.inputAccessoryView = toolBar
         
         ratingPickerData = ["All",
             "G", "PG", "PG-13", "R", "NC-17"
         ]
         sortPickerData = ["popularity.desc", "revenue.desc", "release_date.desc", "vote_average.desc"]
+        
+        for genreArray in genres {
+            genrePickerData.append(genreArray["name"]!)
+        }
         
         startDatePicker.datePickerMode = UIDatePickerMode.date
         startDateRange.inputView = startDatePicker
@@ -113,6 +127,7 @@ class FiltersViewController: UIViewController {
                 dateFormatter.dateFormat = "yyyy-MM-dd"
                 searchResultsViewController.startDate = dateFormatter.string(from: startDate!)
                 searchResultsViewController.endDate = dateFormatter.string(from: endDate!)
+                searchResultsViewController.genre = genre
             }
         }
     }
@@ -134,6 +149,8 @@ extension FiltersViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             return sortPickerData.count
         case ratingPicker:
             return ratingPickerData.count
+        case genrePicker:
+            return genrePickerData.count
         default:
             return 1
         }
@@ -146,6 +163,8 @@ extension FiltersViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             return sortPickerData[row]
         case ratingPicker:
             return ratingPickerData[row]
+        case genrePicker:
+            return genrePickerData[row]
         default:
             return "Error"
         }
@@ -161,6 +180,14 @@ extension FiltersViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         } else if pickerView == ratingPicker {
             rating = ratingPickerData[row]
             ratingField.text = ratingPickerData[row]
+        } else if pickerView == genrePicker {
+            let name = genrePickerData[row]
+            for genreArray in genres {
+                if (genreArray["name"]!) == name {
+                    genre = genreArray["id"]!
+                }
+            }
+            genreField.text = genrePickerData[row]
         }
     }
 }

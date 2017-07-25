@@ -23,7 +23,7 @@ class SearchResultsTableViewController: UITableViewController {
     
     var watchlist = [MovieObject]() {
         didSet {
-            getTMDBMovies(page: page, sortType: sortType!, rating: rating!, startDate: startDate!, endDate: endDate!)
+            getTMDBMovies(page: page, sortType: sortType!, rating: rating!, startDate: startDate!, endDate: endDate!, genre: genre!)
         }
     }
     
@@ -33,6 +33,7 @@ class SearchResultsTableViewController: UITableViewController {
     var rating: String?
     var startDate: String?
     var endDate: String?
+    var genre: String?
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -75,7 +76,7 @@ class SearchResultsTableViewController: UITableViewController {
         // if last table cell is rendered fetch next page of api request results
         if (indexPath.row == movies.count - 1) {
             page += 1
-            getTMDBMovies(page: page, sortType: sortType!, rating: rating!, startDate: startDate!, endDate: endDate!)
+            getTMDBMovies(page: page, sortType: sortType!, rating: rating!, startDate: startDate!, endDate: endDate!, genre: genre!)
         }
         
         return cell
@@ -132,9 +133,9 @@ class SearchResultsTableViewController: UITableViewController {
     }
     */
     
-    func getTMDBMovies(page: Int, sortType: String, rating: String, startDate: String, endDate: String) {
+    func getTMDBMovies(page: Int, sortType: String, rating: String, startDate: String, endDate: String, genre: String) {
         spinner.startAnimating()
-        TheMovieDatabaseApiClient.shared.getMovies(page: page, sortType: sortType, rating: rating, startDate: startDate, endDate: endDate) { data, response, error in
+        TheMovieDatabaseApiClient.shared.getMovies(page: page, sortType: sortType, rating: rating, startDate: startDate, endDate: endDate, genre: genre) { data, response, error in
             if error != nil {
                 return
             }

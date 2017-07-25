@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct Genres {
+struct FilterOptions {
     let genres = [
     [
-        "id": "0",
+        "id": "",
         "name": "All Genres"
     ],
     [

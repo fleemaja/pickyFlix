@@ -21,9 +21,9 @@ class SearchResultsTableViewController: UITableViewController {
         }
     }
     
-    var watchlist = [MovieObject]() {
+    var watchlist: [MovieObject]? {
         didSet {
-            getTMDBMovies(page: page, sortType: sortType!, rating: rating!, startDate: startDate!, endDate: endDate!, genre: genre!)
+            getTMDBMovies(page: page, sortType: sortType!, rating: rating!, startDate: startDate!, endDate: endDate!, genre: genre!, castMemberId: castMemberId!)
         }
     }
     
@@ -34,11 +34,49 @@ class SearchResultsTableViewController: UITableViewController {
     var startDate: String?
     var endDate: String?
     var genre: String?
+    
+    var castMember: String?
+    var castMemberId: String?
+    
+    private func getCastMemberId(castMember: String) {
+        print("getting cast member id")
+        if castMember == "" {
+            castMemberId = ""
+            self.movies.removeAll()
+            self.loadWatchlist()
+        } else {
+            TheMovieDatabaseApiClient.shared.getCastMemberId(castMember: castMember) { data, response, error in
+                if error != nil {
+                    print(error ?? "There was an error")
+                    return
+                }
+                
+                let results: [[String: AnyObject]]
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:Any]
+                    results = (json?["results"] as? [[String : AnyObject]])!
+                } catch {
+                    print("JSON converting error")
+                    return
+                }
+                
+                if results.count > 0 {
+                    self.castMemberId = String(describing: results[0]["id"]!)
+                    print("loading watchlist")
+                    DispatchQueue.main.async {
+                        self.movies.removeAll()
+                        self.loadWatchlist()
+                    }
+                }
+            }
+        }
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.movies.removeAll()
-        loadWatchlist()
+        print("view will appear")
+        page = 1
+        getCastMemberId(castMember: castMember!)
     }
     
     private func loadWatchlist() {
@@ -76,7 +114,7 @@ class SearchResultsTableViewController: UITableViewController {
         // if last table cell is rendered fetch next page of api request results
         if (indexPath.row == movies.count - 1) {
             page += 1
-            getTMDBMovies(page: page, sortType: sortType!, rating: rating!, startDate: startDate!, endDate: endDate!, genre: genre!)
+            getTMDBMovies(page: page, sortType: sortType!, rating: rating!, startDate: startDate!, endDate: endDate!, genre: genre!, castMemberId: castMemberId!)
         }
         
         return cell
@@ -133,9 +171,9 @@ class SearchResultsTableViewController: UITableViewController {
     }
     */
     
-    func getTMDBMovies(page: Int, sortType: String, rating: String, startDate: String, endDate: String, genre: String) {
+    func getTMDBMovies(page: Int, sortType: String, rating: String, startDate: String, endDate: String, genre: String, castMemberId: String) {
         spinner.startAnimating()
-        TheMovieDatabaseApiClient.shared.getMovies(page: page, sortType: sortType, rating: rating, startDate: startDate, endDate: endDate, genre: genre) { data, response, error in
+        TheMovieDatabaseApiClient.shared.getMovies(page: page, sortType: sortType, rating: rating, startDate: startDate, endDate: endDate, genre: genre, castMemberId: castMemberId) { data, response, error in
             if error != nil {
                 return
             }
@@ -149,9 +187,10 @@ class SearchResultsTableViewController: UITableViewController {
                 return
             }
             
+            print("adding movies")
             for result in results {
                 var inWatchlist = false
-                for watchlistMovie in self.watchlist {
+                for watchlistMovie in self.watchlist! {
                     if watchlistMovie.id == (result["id"] as! Int32) {
                         inWatchlist = true
                     }

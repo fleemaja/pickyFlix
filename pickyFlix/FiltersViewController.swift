@@ -15,6 +15,7 @@ class FiltersViewController: UIViewController {
     @IBOutlet weak var startDateRange: UITextField!
     @IBOutlet weak var endDateRange: UITextField!
     @IBOutlet weak var genreField: UITextField!
+    @IBOutlet weak var castField: UITextField!
     
     let sortPicker = UIPickerView()
     let ratingPicker = UIPickerView()
@@ -30,8 +31,9 @@ class FiltersViewController: UIViewController {
     var rating = "All"
     var startDate: Date?
     var endDate: Date?
-    let genres = Genres().genres
-    var genre = "0"
+    let genres = FilterOptions().genres
+    var genre = ""
+    var castMember: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +65,7 @@ class FiltersViewController: UIViewController {
         sortField.inputAccessoryView = toolBar
         ratingField.inputAccessoryView = toolBar
         genreField.inputAccessoryView = toolBar
+        
         
         ratingPickerData = ["All",
             "G", "PG", "PG-13", "R", "NC-17"
@@ -128,6 +131,7 @@ class FiltersViewController: UIViewController {
                 searchResultsViewController.startDate = dateFormatter.string(from: startDate!)
                 searchResultsViewController.endDate = dateFormatter.string(from: endDate!)
                 searchResultsViewController.genre = genre
+                searchResultsViewController.castMember = castField.text
             }
         }
     }

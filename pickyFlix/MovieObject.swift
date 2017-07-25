@@ -25,12 +25,14 @@ class MovieObject: NSManagedObject {
             throw error
         }
         
-        print("creating movie")
-        
         // no existing movie found. create new movie
         let movie = MovieObject(context: context)
         movie.id = (movieInfo["id"] as? Int32)!
         movie.title = movieInfo["title"] as? String
+        movie.year = movieInfo["year"] as? String
+        movie.overview = movieInfo["overview"] as? String
+        movie.rating = movieInfo["rating"] as? String
+        movie.posterImage = movieInfo["posterImage"] as? NSData
         return movie
     }
     

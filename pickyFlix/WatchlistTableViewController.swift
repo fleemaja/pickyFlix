@@ -11,7 +11,7 @@ import CoreData
 
 class WatchlistTableViewController: UITableViewController {
     
-    var movies = [MovieObject]() {
+    var movies = [Movie]() {
         didSet {
             tableView.reloadData()
         }
@@ -33,11 +33,23 @@ class WatchlistTableViewController: UITableViewController {
                 if let movieObjects = (try? context.fetch(movieRequest)) {
                     print("MovieObject count: \(movieObjects.count)")
                     for movie in movieObjects {
-                        self.movies.append(movie)
+                        self.createMovieFromMovieObject(movie: movie)
                     }
                 }
             }
         }
+    }
+    
+    private func createMovieFromMovieObject(movie: MovieObject) {
+        var movieDictionary = [String : AnyObject]()
+        movieDictionary["id"] = movie.id as AnyObject
+        movieDictionary["title"] = movie.title as AnyObject
+        movieDictionary["release_date"] = movie.year as AnyObject
+        movieDictionary["posterImage"] = movie.posterImage
+        movieDictionary["overview"] = movie.overview as AnyObject
+        movieDictionary["vote_average"] = movie.rating as AnyObject
+        let movie = Movie(dictionary: movieDictionary, inWatchlist: true)
+        self.movies.append(movie)
     }
 
     // MARK: - Table view data source
@@ -53,28 +65,42 @@ class WatchlistTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MovieTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath)
         
         // Configure the cell...
         let movie = movies[indexPath.row]
-        cell.titleLabel?.text = movie.title
-        cell.descriptionLabel?.text = "On Watchlist"
+        if let movieCell = cell as? MovieTableViewCell {
+            movieCell.movie = movie
+        }
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let movie = movies[indexPath.row]
-        if let context = container?.viewContext {
-            context.perform {
-                let movieRequest: NSFetchRequest<MovieObject> = MovieObject.fetchRequest()
-                movieRequest.predicate = NSPredicate(format: "%K == %@", argumentArray:["id", movie.id])
-                if let result = try? context.fetch(movieRequest) {
-                    for object in result {
-                        context.delete(object)
-                        self.movies.remove(at: indexPath.row)
+        let url =  URL(string: "https://www.themoviedb.org/movie/\(movie.id)")!
+        UIApplication.shared.open(url, options: [:])
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            // handle delete (by removing the data from your array and updating the tableview)
+            let movie = movies[indexPath.row]
+            if let context = container?.viewContext {
+                context.perform {
+                    let movieRequest: NSFetchRequest<MovieObject> = MovieObject.fetchRequest()
+                    movieRequest.predicate = NSPredicate(format: "%K == %@", argumentArray:["id", movie.id])
+                    if let result = try? context.fetch(movieRequest) {
+                        for object in result {
+                            context.delete(object)
+                            self.movies.remove(at: indexPath.row)
+                        }
+                        try? context.save()
                     }
-                    try? context.save()
                 }
             }
         }

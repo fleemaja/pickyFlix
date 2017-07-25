@@ -35,6 +35,10 @@ class MovieTableViewCell: UITableViewCell {
             removeMovieFromWatchlist(with: movieInfo)
         } else {
             movie?.savedMovie = true
+            movieInfo["year"] = movie?.year
+            movieInfo["overview"] = movie?.description
+            movieInfo["posterImage"] = UIImagePNGRepresentation((movie?.posterImage)!) as NSData?
+            movieInfo["rating"] = movie?.rating
             addMovieToWatchlist(with: movieInfo)
         }
     }

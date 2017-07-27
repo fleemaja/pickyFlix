@@ -49,6 +49,7 @@ class TheMovieDatabaseApiClient {
             "with_people": options["castMemberId"] ?? "",
             "sort_by": options["sortType"]!,
             "with_genres": options["genre"] ?? "",
+            "vote_count.gte": 10,
             "include_video": false,
             "include_adult": false,
             "page": options["page"]!

@@ -91,4 +91,23 @@ struct FilterOptions {
         "name": "Western"
         ]
     ]
+    
+    let sorts = [
+        [
+            "displayName": "Most Popular",
+            "apiValue": "popularity.desc"
+        ],
+        [
+            "displayName": "Most Revenue",
+            "apiValue": "revenue.desc"
+        ],
+        [
+            "displayName": "Most Recent",
+            "apiValue": "release_date.desc"
+        ],
+        [
+            "displayName": "Highest Rated",
+            "apiValue": "vote_average.desc"
+        ]
+    ]
 }

@@ -11,8 +11,6 @@ import CoreData
 
 class SearchResultsTableViewController: UITableViewController {
     
-    var page = 1
-    
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     var movies = [Movie]() {
@@ -36,6 +34,8 @@ class SearchResultsTableViewController: UITableViewController {
     var startDate: String?
     var endDate: String?
     var genre: String?
+    
+    var page = 1
     
     var castMember: String?
     var castMemberId: String? {
@@ -92,7 +92,7 @@ class SearchResultsTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         page = 1
-        // page: page, sortType: sortType!, rating: rating!, startDate: startDate!, endDate: endDate!, genre: genre!, castMemberId: castMemberId!
+        options["page"] = page
         getCastMemberId(castMember: castMember!)
     }
     
@@ -131,6 +131,7 @@ class SearchResultsTableViewController: UITableViewController {
         // if last table cell is rendered fetch next page of api request results
         if (indexPath.row == movies.count - 1) {
             page += 1
+            options["page"] = page
             getTMDBMovies(options: options)
         }
         

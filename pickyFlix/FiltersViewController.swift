@@ -29,15 +29,59 @@ class FiltersViewController: UIViewController {
     
     var sortType = "popularity.desc"
     var rating = "All"
-    var startDate: Date?
-    var endDate: Date?
+    
+    var startDate: Date? {
+        didSet {
+            endDatePicker.minimumDate = startDate
+        }
+    }
+    
+    var endDate = Date() {
+        didSet {
+            startDatePicker.maximumDate = endDate
+        }
+    }
+    
+    private func initializeStartDate() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-DD"
+        startDate = dateFormatter.date(from: "1900-01-01")!
+    }
+    
     let genres = FilterOptions().genres
+    let sorts = FilterOptions().sorts
     var genre = ""
     var castMember: String?
     
+    func initializeFieldValues() {
+        sortField.text = "Most Popular"
+        ratingField.text = rating
+        genreField.text = "All Genres"
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = DateFormatter.Style.medium
+        startDateRange.text = dateFormatter.string(from: startDate!)
+        endDateRange.text = dateFormatter.string(from: endDate)
+        
+        startDatePicker.date = startDate!
+        startDatePicker.minimumDate = startDate
+        endDatePicker.minimumDate = startDate
+        startDatePicker.maximumDate = endDate
+        endDatePicker.maximumDate = endDate
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        sortField.delegate = self
+        ratingField.delegate = self
+        startDateRange.delegate = self
+        endDateRange.delegate = self
+        genreField.delegate = self
+        
+        initializeStartDate()
+        initializeFieldValues()
+        
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.default
         toolBar.isTranslucent = true
@@ -70,7 +114,10 @@ class FiltersViewController: UIViewController {
         ratingPickerData = ["All",
             "G", "PG", "PG-13", "R", "NC-17"
         ]
-        sortPickerData = ["popularity.desc", "revenue.desc", "release_date.desc", "vote_average.desc"]
+        
+        for sortArray in sorts {
+            sortPickerData.append(sortArray["displayName"]!)
+        }
         
         for genreArray in genres {
             genrePickerData.append(genreArray["name"]!)
@@ -127,9 +174,9 @@ class FiltersViewController: UIViewController {
                 searchResultsViewController.sortType = sortType
                 searchResultsViewController.rating = rating
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd"
+                dateFormatter.dateFormat = "YYYY-MM-DD"
                 searchResultsViewController.startDate = dateFormatter.string(from: startDate!)
-                searchResultsViewController.endDate = dateFormatter.string(from: endDate!)
+                searchResultsViewController.endDate = dateFormatter.string(from: endDate)
                 searchResultsViewController.genre = genre
                 searchResultsViewController.castMember = castField.text
             }
@@ -179,8 +226,13 @@ extension FiltersViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         // This method is triggered whenever the user makes a change to the picker selection.
         // The parameter named row and component represents what was selected.
         if pickerView == sortPicker {
-            sortType = sortPickerData[row]
-            sortField.text = sortPickerData[row]
+            let name = sortPickerData[row]
+            for sortArray in sorts {
+                if (sortArray["displayName"]!) == name {
+                    sortType = sortArray["apiValue"]!
+                }
+            }
+            sortField.text = name
         } else if pickerView == ratingPicker {
             rating = ratingPickerData[row]
             ratingField.text = ratingPickerData[row]
@@ -191,7 +243,16 @@ extension FiltersViewController: UIPickerViewDelegate, UIPickerViewDataSource {
                     genre = genreArray["id"]!
                 }
             }
-            genreField.text = genrePickerData[row]
+            genreField.text = name
         }
     }
+}
+
+extension FiltersViewController: UITextFieldDelegate {
+    
+    // only allow picker options and do not allow typing for all inputs except cast member text field
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return false
+    }
+    
 }

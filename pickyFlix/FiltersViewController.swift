@@ -179,7 +179,7 @@ class FiltersViewController: UIViewController {
                 searchResultsViewController.startDate = dateFormatter.string(from: startDate!)
                 searchResultsViewController.endDate = dateFormatter.string(from: endDate)
                 searchResultsViewController.genre = genre
-                searchResultsViewController.castMember = castField.text
+                searchResultsViewController.castMember = castField.text!
             }
         }
     }

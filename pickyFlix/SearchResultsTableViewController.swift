@@ -25,16 +25,18 @@ class SearchResultsTableViewController: UITableViewController {
     
     var options = [String : Any]()
     
-    var sortType: String?
-    var rating: String?
-    var startDate: String?
+    var sortType = "popularity.desc"
+    var rating = "All"
+    var startDate = "1900-01-01"
     var endDate: String?
-    var genre: String?
+    
+    var genre = ""
     
     var page = 1
+    var totalPages = 1
     
-    var castMember: String?
-    var castMemberId: String? {
+    var castMember = ""
+    var castMemberId = "" {
         didSet {
             setOptions()
         }
@@ -83,14 +85,20 @@ class SearchResultsTableViewController: UITableViewController {
     }
     
     private func setOptions() {
-        options["sortType"] = sortType!
-        options["rating"] = rating!
+        options["sortType"] = sortType
+        options["rating"] = rating
         options["page"] = page
-        options["rating"] = rating!
-        options["startDate"] = startDate!
+        options["rating"] = rating
+        options["startDate"] = startDate
         options["endDate"] = endDate!
-        options["genre"] = genre!
-        options["castMemberId"] = castMemberId!
+        options["genre"] = genre
+        options["castMemberId"] = castMemberId
+    }
+    
+    override func viewDidLoad() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        endDate = dateFormatter.string(from: Date())
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -99,7 +107,7 @@ class SearchResultsTableViewController: UITableViewController {
         castMemberFound = true
         page = 1
         options["page"] = page
-        getCastMemberId(castMember: castMember!)
+        getCastMemberId(castMember: castMember)
     }
     
     private func loadWatchlist() {
@@ -151,10 +159,12 @@ class SearchResultsTableViewController: UITableViewController {
         }
         
         // if last table cell is rendered fetch next page of api request results
-        if (indexPath.row == movies.count - 1) {
-            page += 1
-            options["page"] = page
-            getTMDBMovies(options: options)
+        if (page < totalPages) {
+            if (indexPath.row == movies.count - 1) {
+                page += 1
+                options["page"] = page
+                getTMDBMovies(options: options)
+            }
         }
         
         return cell
@@ -178,6 +188,7 @@ class SearchResultsTableViewController: UITableViewController {
             let results: [[String: AnyObject]]
             do {
                 let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:Any]
+                self?.totalPages = json?["total_pages"] as! Int
                 results = (json?["results"] as? [[String : AnyObject]])!
             } catch {
                 print("JSON converting error")

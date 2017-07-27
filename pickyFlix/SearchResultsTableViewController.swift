@@ -23,11 +23,13 @@ class SearchResultsTableViewController: UITableViewController {
     
     var watchlist: [MovieObject]? {
         didSet {
-            getTMDBMovies(page: page, sortType: sortType!, rating: rating!, startDate: startDate!, endDate: endDate!, genre: genre!, castMemberId: castMemberId!)
+            getTMDBMovies(options: options)
         }
     }
     
     var container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
+    
+    var options = [String : Any]()
     
     var sortType: String?
     var rating: String?
@@ -36,7 +38,11 @@ class SearchResultsTableViewController: UITableViewController {
     var genre: String?
     
     var castMember: String?
-    var castMemberId: String?
+    var castMemberId: String? {
+        didSet {
+            setOptions()
+        }
+    }
     
     private func getCastMemberId(castMember: String) {
         print("getting cast member id")
@@ -71,11 +77,22 @@ class SearchResultsTableViewController: UITableViewController {
             }
         }
     }
+    
+    private func setOptions() {
+        options["sortType"] = sortType!
+        options["rating"] = rating!
+        options["page"] = page
+        options["rating"] = rating!
+        options["startDate"] = startDate!
+        options["endDate"] = endDate!
+        options["genre"] = genre!
+        options["castMemberId"] = castMemberId!
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        print("view will appear")
         page = 1
+        // page: page, sortType: sortType!, rating: rating!, startDate: startDate!, endDate: endDate!, genre: genre!, castMemberId: castMemberId!
         getCastMemberId(castMember: castMember!)
     }
     
@@ -114,7 +131,7 @@ class SearchResultsTableViewController: UITableViewController {
         // if last table cell is rendered fetch next page of api request results
         if (indexPath.row == movies.count - 1) {
             page += 1
-            getTMDBMovies(page: page, sortType: sortType!, rating: rating!, startDate: startDate!, endDate: endDate!, genre: genre!, castMemberId: castMemberId!)
+            getTMDBMovies(options: options)
         }
         
         return cell
@@ -125,55 +142,10 @@ class SearchResultsTableViewController: UITableViewController {
         let url =  URL(string: "https://www.themoviedb.org/movie/\(movie.id)")!
         UIApplication.shared.open(url, options: [:])
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
-    func getTMDBMovies(page: Int, sortType: String, rating: String, startDate: String, endDate: String, genre: String, castMemberId: String) {
+    func getTMDBMovies(options: [String : Any]) {
         spinner.startAnimating()
-        TheMovieDatabaseApiClient.shared.getMovies(page: page, sortType: sortType, rating: rating, startDate: startDate, endDate: endDate, genre: genre, castMemberId: castMemberId) { data, response, error in
+        TheMovieDatabaseApiClient.shared.getMovies(options: options) { data, response, error in
             if error != nil {
                 return
             }

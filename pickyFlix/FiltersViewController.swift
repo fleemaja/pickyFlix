@@ -32,19 +32,19 @@ class FiltersViewController: UIViewController {
     
     var startDate: Date? {
         didSet {
-            endDatePicker.minimumDate = startDate
+             endDatePicker.minimumDate = startDate!
         }
     }
     
     var endDate = Date() {
         didSet {
-            startDatePicker.maximumDate = endDate
+             startDatePicker.maximumDate = endDate
         }
     }
     
     private func initializeStartDate() {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-DD"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         startDate = dateFormatter.date(from: "1900-01-01")!
     }
     
@@ -174,7 +174,8 @@ class FiltersViewController: UIViewController {
                 searchResultsViewController.sortType = sortType
                 searchResultsViewController.rating = rating
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "YYYY-MM-DD"
+                dateFormatter.dateStyle = DateFormatter.Style.medium
+                dateFormatter.dateFormat = "yyyy-MM-dd"
                 searchResultsViewController.startDate = dateFormatter.string(from: startDate!)
                 searchResultsViewController.endDate = dateFormatter.string(from: endDate)
                 searchResultsViewController.genre = genre

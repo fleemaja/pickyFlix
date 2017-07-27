@@ -13,11 +13,7 @@ class SearchResultsTableViewController: UITableViewController {
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
-    var movies = [Movie]() {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    var movies = [Movie]()
     
     var watchlist: [MovieObject]? {
         didSet {
@@ -43,6 +39,9 @@ class SearchResultsTableViewController: UITableViewController {
             setOptions()
         }
     }
+    
+    var moviesFetched = false
+    var castMemberFound = true
     
     private func getCastMemberId(castMember: String) {
         print("getting cast member id")
@@ -73,6 +72,11 @@ class SearchResultsTableViewController: UITableViewController {
                         self.movies.removeAll()
                         self.loadWatchlist()
                     }
+                } else {
+                    self.castMemberFound = false
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 }
             }
         }
@@ -91,6 +95,8 @@ class SearchResultsTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        moviesFetched = false
+        castMemberFound = true
         page = 1
         options["page"] = page
         getCastMemberId(castMember: castMember!)
@@ -110,8 +116,24 @@ class SearchResultsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+        var numOfSections: Int = 0
+        print("moviesFetched: \(moviesFetched)")
+        print("movie count: \(movies.count)")
+        print("cast member found: \(castMemberFound)")
+        print("which thingy is it rendering? \(castMemberFound && (!moviesFetched || movies.count > 0))")
+        if castMemberFound && (!moviesFetched || movies.count > 0) {
+            tableView.separatorStyle = .singleLine
+            numOfSections            = 1
+            tableView.backgroundView = nil
+        } else {
+            let noDataLabel: UILabel     = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+            noDataLabel.text          = "No results found"
+            noDataLabel.textColor     = UIColor.black
+            noDataLabel.textAlignment = .center
+            tableView.backgroundView  = noDataLabel
+            tableView.separatorStyle  = .none
+        }
+        return numOfSections
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -146,11 +168,13 @@ class SearchResultsTableViewController: UITableViewController {
     
     func getTMDBMovies(options: [String : Any]) {
         spinner.startAnimating()
-        TheMovieDatabaseApiClient.shared.getMovies(options: options) { data, response, error in
+        print(options)
+        TheMovieDatabaseApiClient.shared.getMovies(options: options) { [weak self] data, response, error in
+            print("made api request")
+            self?.moviesFetched = true
             if error != nil {
                 return
             }
-            
             let results: [[String: AnyObject]]
             do {
                 let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:Any]
@@ -163,16 +187,17 @@ class SearchResultsTableViewController: UITableViewController {
             print("adding movies")
             for result in results {
                 var inWatchlist = false
-                for watchlistMovie in self.watchlist! {
+                for watchlistMovie in (self?.watchlist!)! {
                     if watchlistMovie.id == (result["id"] as! Int32) {
                         inWatchlist = true
                     }
                 }
                 let movie = Movie(dictionary: result, inWatchlist: inWatchlist)
-                self.movies.append(movie)
+                self?.movies.append(movie)
             }
             DispatchQueue.main.async {
-                self.spinner.stopAnimating()
+                self?.tableView.reloadData()
+                self?.spinner.stopAnimating()
             }
         }
     }

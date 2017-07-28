@@ -99,6 +99,7 @@ class SearchResultsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         endDate = dateFormatter.string(from: Date())
@@ -106,6 +107,11 @@ class SearchResultsTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        // estimated height is the height of poster images returned from TMDB API
+        tableView.estimatedRowHeight = 138.0
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
         moviesFetched = false
         castMemberFound = true
         page = 1

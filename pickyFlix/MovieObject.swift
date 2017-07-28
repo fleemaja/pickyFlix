@@ -18,7 +18,6 @@ class MovieObject: NSManagedObject {
         do {
             let matches = try context.fetch(request)
             if matches.count > 0 {
-                print("found a match")
                 return matches[0]
             }
         } catch {

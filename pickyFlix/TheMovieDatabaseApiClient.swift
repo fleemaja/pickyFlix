@@ -21,7 +21,6 @@ class TheMovieDatabaseApiClient {
     }
     
     public func getCastMemberId(castMember: String, handler: @escaping (_ data: Data?, _ response: AnyObject?, _ error: String?) -> Void) {
-        // http://api.tmdb.org/3/search/person?api_key=KEY&query=tom%20hanks
         let baseUrl = "https://api.tmdb.org/3/search/person"
         let params = [
             "api_key": TMDBapiKey,

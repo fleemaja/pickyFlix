@@ -22,6 +22,7 @@
 		3A84FD261F1E99CC0043D3A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A84FD241F1E99CC0043D3A4 /* LaunchScreen.storyboard */; };
 		3A84FD2F1F1EAD5D0043D3A4 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84FD2E1F1EAD5D0043D3A4 /* SearchResultsTableViewController.swift */; };
 		3A84FD311F1EAD9A0043D3A4 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84FD301F1EAD9A0043D3A4 /* MovieTableViewCell.swift */; };
+		3A943CBB1F2AC04B00EF5A39 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A943CBA1F2AC04B00EF5A39 /* UIViewControllerExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		3A84FD271F1E99CC0043D3A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A84FD2E1F1EAD5D0043D3A4 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
 		3A84FD301F1EAD9A0043D3A4 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
+		3A943CBA1F2AC04B00EF5A39 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				3A03B2F41F211B8E005AA73A /* Movie.swift */,
 				3A84FD301F1EAD9A0043D3A4 /* MovieTableViewCell.swift */,
 				3A84FD1F1F1E99CC0043D3A4 /* pickyFlix.xcdatamodeld */,
+				3A943CBA1F2AC04B00EF5A39 /* UIViewControllerExtension.swift */,
 			);
 			path = pickyFlix;
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 				3A84FD311F1EAD9A0043D3A4 /* MovieTableViewCell.swift in Sources */,
 				3A84FD2F1F1EAD5D0043D3A4 /* SearchResultsTableViewController.swift in Sources */,
 				3A84FD1B1F1E99CC0043D3A4 /* FiltersViewController.swift in Sources */,
+				3A943CBB1F2AC04B00EF5A39 /* UIViewControllerExtension.swift in Sources */,
 				3A03B2F11F2114F2005AA73A /* TheMovieDatabaseApiClient.swift in Sources */,
 				3A84FD191F1E99CC0043D3A4 /* AppDelegate.swift in Sources */,
 				3A84FD211F1E99CC0043D3A4 /* pickyFlix.xcdatamodeld in Sources */,

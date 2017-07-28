@@ -29,8 +29,9 @@ struct Movie {
         if let poster = dictionary["poster_path"] as? String {
             posterPath = "https://image.tmdb.org/t/p/w92\(poster)"
             let url = URL(string: posterPath)
-            let data = try? Data(contentsOf: url!)
-            posterImage = UIImage(data: data!)!
+            if let data = try? Data(contentsOf: url!) {
+                posterImage = UIImage(data: data)!
+            }
         }
         
         year = dictionary["release_date"] as? String ?? ""

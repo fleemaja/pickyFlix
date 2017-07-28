@@ -46,15 +46,18 @@ class SearchResultsTableViewController: UITableViewController {
     var castMemberFound = true
     
     private func getCastMemberId(castMember: String) {
-        print("getting cast member id")
         if castMember == "" {
             castMemberId = ""
             self.movies.removeAll()
             self.loadWatchlist()
         } else {
             TheMovieDatabaseApiClient.shared.getCastMemberId(castMember: castMember) { data, response, error in
-                if error != nil {
-                    print(error ?? "There was an error")
+                if (data == nil || error != nil) {
+                    self.showErrorAlert(message: "Network Error")
+                    self.castMemberFound = false
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                     return
                 }
                 
@@ -69,7 +72,6 @@ class SearchResultsTableViewController: UITableViewController {
                 
                 if results.count > 0 {
                     self.castMemberId = String(describing: results[0]["id"]!)
-                    print("loading watchlist")
                     DispatchQueue.main.async {
                         self.movies.removeAll()
                         self.loadWatchlist()
@@ -96,6 +98,7 @@ class SearchResultsTableViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         endDate = dateFormatter.string(from: Date())
@@ -125,10 +128,6 @@ class SearchResultsTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         var numOfSections: Int = 0
-        print("moviesFetched: \(moviesFetched)")
-        print("movie count: \(movies.count)")
-        print("cast member found: \(castMemberFound)")
-        print("which thingy is it rendering? \(castMemberFound && (!moviesFetched || movies.count > 0))")
         if castMemberFound && (!moviesFetched || movies.count > 0) {
             tableView.separatorStyle = .singleLine
             numOfSections            = 1
@@ -178,11 +177,13 @@ class SearchResultsTableViewController: UITableViewController {
     
     func getTMDBMovies(options: [String : Any]) {
         spinner.startAnimating()
-        print(options)
         TheMovieDatabaseApiClient.shared.getMovies(options: options) { [weak self] data, response, error in
-            print("made api request")
             self?.moviesFetched = true
-            if error != nil {
+            if (data == nil || error != nil) {
+                self?.showErrorAlert(message: "Network Error")
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
                 return
             }
             let results: [[String: AnyObject]]
@@ -191,11 +192,9 @@ class SearchResultsTableViewController: UITableViewController {
                 self?.totalPages = json?["total_pages"] as! Int
                 results = (json?["results"] as? [[String : AnyObject]])!
             } catch {
-                print("JSON converting error")
                 return
             }
             
-            print("adding movies")
             for result in results {
                 var inWatchlist = false
                 for watchlistMovie in (self?.watchlist!)! {

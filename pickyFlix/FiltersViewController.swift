@@ -78,6 +78,7 @@ class FiltersViewController: UIViewController {
         startDateRange.delegate = self
         endDateRange.delegate = self
         genreField.delegate = self
+        castField.delegate = self
         
         initializeStartDate()
         initializeFieldValues()
@@ -246,8 +247,13 @@ extension FiltersViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
 extension FiltersViewController: UITextFieldDelegate {
     
-    // only allow picker options and do not allow typing for all inputs except cast member text field
+    // only allow typing for the cast field and only allow picker options for all others
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return textField == castField
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
         return false
     }
     

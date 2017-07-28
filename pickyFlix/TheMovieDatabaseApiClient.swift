@@ -90,10 +90,5 @@ class TheMovieDatabaseApiClient {
     /*
      * Return the singleton instance of Model
      */
-    class var shared: TheMovieDatabaseApiClient {
-        struct Static {
-            static let instance: TheMovieDatabaseApiClient = TheMovieDatabaseApiClient()
-        }
-        return Static.instance
-    }
+    static let shared = TheMovieDatabaseApiClient()
 }

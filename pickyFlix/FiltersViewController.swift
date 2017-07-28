@@ -155,12 +155,7 @@ class FiltersViewController: UIViewController {
     }
     
     func donePicker(sender:UIBarButtonItem) {
-        self.view.endEditing(true)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        view.endEditing(true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

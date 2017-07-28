@@ -48,8 +48,8 @@ class SearchResultsTableViewController: UITableViewController {
     private func getCastMemberId(castMember: String) {
         if castMember == "" {
             castMemberId = ""
-            self.movies.removeAll()
-            self.loadWatchlist()
+            movies.removeAll()
+            loadWatchlist()
         } else {
             TheMovieDatabaseApiClient.shared.getCastMemberId(castMember: castMember) { data, results, error in
                 if (data == nil || error != nil) {
@@ -141,8 +141,7 @@ class SearchResultsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return self.movies.count
+        return movies.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

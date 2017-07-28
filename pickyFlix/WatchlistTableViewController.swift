@@ -30,7 +30,7 @@ class WatchlistTableViewController: UITableViewController {
     }
     
     private func loadMovies() {
-        self.movies.removeAll()
+        movies.removeAll()
         if let context = container?.viewContext {
             context.perform {
                 let movieRequest: NSFetchRequest<MovieObject> = MovieObject.fetchRequest()
@@ -54,7 +54,7 @@ class WatchlistTableViewController: UITableViewController {
         movieDictionary["overview"] = movie.overview as AnyObject
         movieDictionary["vote_average"] = movie.rating as AnyObject
         let movie = Movie(dictionary: movieDictionary, inWatchlist: true)
-        self.movies.append(movie)
+        movies.append(movie)
     }
 
     // MARK: - Table view data source
@@ -77,8 +77,7 @@ class WatchlistTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return self.movies.count
+        return movies.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

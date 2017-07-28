@@ -10,17 +10,26 @@ import Foundation
 
 class TheMovieDatabaseApiClient {
     
-    public func getMovies(options: [String : Any], handler: @escaping (_ data: Data?, _ response: AnyObject?, _ error: String?) -> Void) {
+    public func getMovies(options: [String : Any], handler: @escaping (_ data: Data?, _ results: [[String: AnyObject]], _ error: String?, _ totalPages: Int) -> Void) {
         let url = constructURLString(options: options)
         let request = NSMutableURLRequest(url: URL(string: url)!)
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
-            handler(data, response, error as? String)
+            var results = [[String: AnyObject]]()
+            var totalPages = 1
+            do {
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:Any]
+                totalPages = json?["total_pages"] as! Int
+                results = (json?["results"] as? [[String : AnyObject]])!
+            } catch {
+                return
+            }
+            handler(data, results, error as? String, totalPages)
         }
         task.resume()
     }
     
-    public func getCastMemberId(castMember: String, handler: @escaping (_ data: Data?, _ response: AnyObject?, _ error: String?) -> Void) {
+    public func getCastMemberId(castMember: String, handler: @escaping (_ data: Data?, _ results: [[String: AnyObject]], _ error: String?) -> Void) {
         let baseUrl = "https://api.tmdb.org/3/search/person"
         let params = [
             "api_key": TMDBapiKey,
@@ -30,7 +39,15 @@ class TheMovieDatabaseApiClient {
         let request = NSMutableURLRequest(url: URL(string: url)!)
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
-            handler(data, response, error as? String)
+            var results = [[String: AnyObject]]()
+            do {
+                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:Any]
+                results = (json?["results"] as? [[String : AnyObject]])!
+            } catch {
+                print("JSON converting error")
+                return
+            }
+            handler(data, results, error as? String)
         }
         task.resume()
     }

@@ -51,22 +51,13 @@ class SearchResultsTableViewController: UITableViewController {
             self.movies.removeAll()
             self.loadWatchlist()
         } else {
-            TheMovieDatabaseApiClient.shared.getCastMemberId(castMember: castMember) { data, response, error in
+            TheMovieDatabaseApiClient.shared.getCastMemberId(castMember: castMember) { data, results, error in
                 if (data == nil || error != nil) {
                     self.showErrorAlert(message: "Network Error")
                     self.castMemberFound = false
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
-                    return
-                }
-                
-                let results: [[String: AnyObject]]
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:Any]
-                    results = (json?["results"] as? [[String : AnyObject]])!
-                } catch {
-                    print("JSON converting error")
                     return
                 }
                 
@@ -183,21 +174,14 @@ class SearchResultsTableViewController: UITableViewController {
     
     func getTMDBMovies(options: [String : Any]) {
         spinner.startAnimating()
-        TheMovieDatabaseApiClient.shared.getMovies(options: options) { [weak self] data, response, error in
+        TheMovieDatabaseApiClient.shared.getMovies(options: options) { [weak self] data, results, error, totalPages in
             self?.moviesFetched = true
+            self?.totalPages = totalPages
             if (data == nil || error != nil) {
                 self?.showErrorAlert(message: "Network Error")
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
                 }
-                return
-            }
-            let results: [[String: AnyObject]]
-            do {
-                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:Any]
-                self?.totalPages = json?["total_pages"] as! Int
-                results = (json?["results"] as? [[String : AnyObject]])!
-            } catch {
                 return
             }
             

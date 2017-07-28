@@ -17,12 +17,14 @@ class TheMovieDatabaseApiClient {
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
             var results = [[String: AnyObject]]()
             var totalPages = 1
-            do {
-                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:Any]
-                totalPages = json?["total_pages"] as! Int
-                results = (json?["results"] as? [[String : AnyObject]])!
-            } catch {
-                return
+            if (data != nil && error == nil) {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:Any]
+                    totalPages = json?["total_pages"] as! Int
+                    results = (json?["results"] as? [[String : AnyObject]])!
+                } catch {
+                    return
+                }
             }
             handler(data, results, error as? String, totalPages)
         }
@@ -40,12 +42,14 @@ class TheMovieDatabaseApiClient {
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
             var results = [[String: AnyObject]]()
-            do {
-                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:Any]
-                results = (json?["results"] as? [[String : AnyObject]])!
-            } catch {
-                print("JSON converting error")
-                return
+            if (data != nil && error == nil) {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:Any]
+                    results = (json?["results"] as? [[String : AnyObject]])!
+                } catch {
+                    print("JSON converting error")
+                    return
+                }
             }
             handler(data, results, error as? String)
         }

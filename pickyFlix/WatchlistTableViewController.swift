@@ -19,12 +19,15 @@ class WatchlistTableViewController: UITableViewController {
     
     var container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tableView.estimatedRowHeight = 148.0
+        tableView.rowHeight = UITableViewAutomaticDimension
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-        // estimated height is the height of poster images returned from TMDB API
-        tableView.estimatedRowHeight = 138.0
-        tableView.rowHeight = UITableViewAutomaticDimension
         
         loadMovies()
     }

@@ -91,6 +91,9 @@ class SearchResultsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.estimatedRowHeight = 148.0
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         endDate = dateFormatter.string(from: Date())
@@ -98,10 +101,6 @@ class SearchResultsTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-        // estimated height is the height of poster images returned from TMDB API
-        tableView.estimatedRowHeight = 138.0
-        tableView.rowHeight = UITableViewAutomaticDimension
         
         moviesFetched = false
         castMemberFound = true
@@ -186,9 +185,11 @@ class SearchResultsTableViewController: UITableViewController {
             
             for result in results {
                 var inWatchlist = false
-                for watchlistMovie in (self?.watchlist!)! {
-                    if watchlistMovie.id == (result["id"] as! Int32) {
-                        inWatchlist = true
+                if let watchlist = self?.watchlist {
+                    for watchlistMovie in watchlist {
+                        if watchlistMovie.id == (result["id"] as! Int32) {
+                            inWatchlist = true
+                        }
                     }
                 }
                 let movie = Movie(dictionary: result, inWatchlist: inWatchlist)
